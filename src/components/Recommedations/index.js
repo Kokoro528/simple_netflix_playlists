@@ -6,16 +6,22 @@ class Item extends Component {
   }
 
   handleMouseEnter = e => {
-    this.setState(
-      Object.assign({}, this.state, { buttonState: "inline-block" })
-    );
+    this.setState(Object.assign({}, this.state, { buttonState: "block" }));
+  };
+
+  handleMouseLeave = e => {
+    this.setState({ buttonState: "none" });
   };
 
   render() {
     let { id, img, title } = this.props;
     return (
-      <div>
-        <img onMouseEnter={this.handleMouseEnter} src={img} alt="" />
+      <div
+        className="item-container"
+        onMouseEnter={this.handleMouseEnter}
+        onMouseLeave={this.handleMouseLeave}
+      >
+        <img src={img} alt="" />
         <button
           onClick={e => this.props.addLike(id)}
           style={{ display: this.state.buttonState }}
@@ -36,11 +42,13 @@ class Recommendations extends Component {
     let recommendations;
     recommendations = this.props.recommendations;
     return (
-      <ul>
-        {recommendations.map(e => {
-          return <Item {...e} addLike={this.props.addLike} />;
-        })}
-      </ul>
+      <div className="movie-container">
+        <ul>
+          {recommendations.map(e => {
+            return <Item {...e} addLike={this.props.addLike} />;
+          })}
+        </ul>
+      </div>
     );
   }
 }
